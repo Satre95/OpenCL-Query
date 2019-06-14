@@ -47,32 +47,32 @@ int main() {
             std::cout << "Platform has these device(s):" << std::endl;
             platform.getDevices(CL_DEVICE_TYPE_GPU, &gpuDevices);
 
-            for(auto & aDevice: cpuDevices) {
+            for(auto & aDevice: gpuDevices) {
                 std::cout << "\t" << deviceCount << ". ";
-                std::cout << aDevice.getInfo<CL_DEVICE_VERSION>() << std::endl;
+                std::cout << aDevice.getInfo<CL_DEVICE_NAME>() << std::endl;
                 deviceCount++;
             }
-        } catch(...) {std::cout << "Exception when querying GPU devices" << std::endl;}
+        } catch(...) {}
 
         try {
             platform.getDevices(CL_DEVICE_TYPE_CPU, &cpuDevices);
-            for(auto & aDevice: gpuDevices) {
+            for(auto & aDevice: cpuDevices) {
                 std::cout << "\t" << deviceCount << ". ";
-                std::cout << aDevice.getInfo<CL_DEVICE_VERSION>() << std::endl;
+                std::cout << aDevice.getInfo<CL_DEVICE_NAME>() << std::endl;
                 deviceCount++;
             }
 
-        } catch(...) {std::cout << "Exception when querying CPU devices" << std::endl;}
+        } catch(...) {}
 
         try {
             platform.getDevices(CL_DEVICE_TYPE_ACCELERATOR, &acceleratorDevices);
             for(auto & aDevice: acceleratorDevices) {
                 std::cout << "\t" << deviceCount << ". ";
-                std::cout << aDevice.getInfo<CL_DEVICE_VERSION>() << std::endl;
+                std::cout << aDevice.getInfo<CL_DEVICE_NAME>() << std::endl;
                 deviceCount++;
             }
 
-        } catch(...) {}std::cout << "Exception when querying Accelerator devices" << std::endl;
+        } catch(...) {}
 
         //cl::Device d = cl::Device::getDefault();
         //std::cout << "Max pipe args: " << d.getInfo<CL_DEVICE_MAX_PIPE_ARGS>() << "\n";
