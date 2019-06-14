@@ -4,6 +4,7 @@
 #include <CL/cl2.hpp>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 
 int main() {
@@ -33,9 +34,16 @@ int main() {
 
         if(extensions.empty() || extensions == " ")
             std::cout << "No extensions found." << std::endl;
-        else
-            std::cout << "Supported extensions: " << extensions << std::endl;
-
+        else {
+            std::cout << "Supported extensions: " << std::endl;
+            std::stringstream ss(extensions);
+            std::istream_iterator<std::string> begin(ss);
+            std::istream_iterator<std::string> end;
+            std::vector<std::string> extensionsList(begin, end);
+            for(auto & anExtension: extensionsList) {
+                std::cout << "\t" << anExtension << "\n";
+            }
+        }
         // Get the devices supported under this platform.
         std::vector<cl::Device> cpuDevices;
         std::vector<cl::Device> gpuDevices;
